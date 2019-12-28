@@ -1,9 +1,11 @@
 #include "src/graphics/window.h"
+#include "src/math/math.h"
 
 int main()
 {
 	using namespace nezus;
 	using namespace graphics;
+	using namespace math;
 
 	Window window("Nezus", 940, 540);
 	glClearColor(.3f, .2f, .5f, 1.0f);
@@ -12,13 +14,17 @@ int main()
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
+	
+	
+	vec4 a(0.2f, 0.3f, 0.8f, 1.0f);
+	vec4 b(0.5f, 0.2f, 0.1f, 1.0f);
+	vec4 c = a * b;
+	
 	while (!window.closed())
 	{
-		//std::cout << window.getWidth() << ", " << window.getHeight() << std::endl;
+	
 		window.clear();
-		double x, y;
-		window.getMousePosition(x, y);
-		std::cout << "x: " << x << "y: " << y << std::endl;
+		std::cout << c << std::endl;
 		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 		{
 			std::cout << "LEFT CLICK!" << std::endl;
@@ -28,7 +34,7 @@ int main()
 			std::cout << "Pressed!" << std::endl;
 		}
 #if 1
-		glBegin(GL_QUADS);
+ 		glBegin(GL_QUADS);
 		glVertex2f(-0.5f, -0.5f);
 		glVertex2f(-0.5f, 0.5f);
 		glVertex2f(0.5f, 0.5f);
@@ -38,7 +44,7 @@ int main()
 #endif
 		glDrawArrays(GL_ARRAY_BUFFER, 0, 6);
 		window.update();
-
+		
 	}
 
 
