@@ -20,11 +20,18 @@ int main()
 	vec4 b(0.5f, 0.2f, 0.1f, 1.0f);
 	vec4 c = a * b;
 	
+	mat4 position = mat4::translation(vec3(2, 3, 4));
+	position *= mat4::identity();
+
+	position.elements[12] = 2.0f;
+
+	vec4 column = position.columns[3];
+	std::cout << column << std::endl;
 	while (!window.closed())
 	{
 	
 		window.clear();
-		std::cout << c << std::endl;
+		//std::cout << c << std::endl;
 		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 		{
 			std::cout << "LEFT CLICK!" << std::endl;
@@ -44,9 +51,13 @@ int main()
 #endif
 		glDrawArrays(GL_ARRAY_BUFFER, 0, 6);
 		window.update();
-		
+
 	}
 
 
+
+
+
 	return 0;
+
 }
