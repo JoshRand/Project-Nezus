@@ -7,6 +7,13 @@
 
 namespace nezus { namespace graphics {
 
+	struct VertexData
+	{
+		math::vec3 vertex;
+		//math::vec4 color;
+		unsigned int color;
+	};
+
 	class Renderable2D
 	{
 	protected:
@@ -14,49 +21,18 @@ namespace nezus { namespace graphics {
 		math::vec2 m_Size;
 		math::vec4 m_Color;
 
-		VertexArray* m_VertexArray;
-		IndexBuffer* m_IndexBuffer;
-		Shader& m_Shader;
-
 	public:
-		Renderable2D(math::vec3 position, math::vec2 size, math::vec4 color, Shader& shader)
-			: m_Position(position), m_Size(size), m_Color(color), m_Shader(shader)
-		{
-			m_VertexArray = new VertexArray();
-			GLfloat vertices[] =
-			{
-				0,0,0,
-				0, size.y, 0,
-				size.x, size.y, 0,
-				size.x, 0, 0
-			};
-			GLfloat colors[] =
-			{
-				color.x, color.y, color.z, color.w,
-				color.x, color.y, color.z, color.w,
-				color.x, color.y, color.z, color.w,
-				color.x, color.y, color.z, color.w
-			};
+		Renderable2D(math::vec3 position, math::vec2 size, math::vec4 color)
+			: m_Position(position), m_Size(size), m_Color(color)
+		{ }
 
-			m_VertexArray->addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
-			m_VertexArray->addBuffer(new Buffer(colors, 4 * 4, 4), 1);
-
-			GLushort indices[] = { 0, 1, 2, 2, 3, 0 };
-			m_IndexBuffer = new IndexBuffer(indices, 6);
-		}
-
-		~Renderable2D()
-		{
-			delete m_VertexArray;
-			delete m_IndexBuffer;
-		}
+		virtual ~Renderable2D() { }
 	public:
-		inline const VertexArray* getVAO() const { return m_VertexArray; }
-		inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
+		
 		inline const math::vec3& getPosition() const { return m_Position; }
 		inline const math::vec2& getSize() const { return m_Size; }
 		inline const math::vec4& getColor() const { return m_Color; }
-		inline Shader& getShader() const { return m_Shader; }
+		
 		
 	
 		

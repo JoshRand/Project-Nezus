@@ -2,8 +2,9 @@
 #include <vector>
 #include <GL/glew.h>
 #include "buffer.h"
-namespace nezus {
-	namespace graphics {
+namespace nezus { namespace graphics {
+	
+	
 
 	class VertexArray
 	{
@@ -18,4 +19,4 @@ namespace nezus {
 		void unbind() const;
 	};
 	
-} }
+}}
