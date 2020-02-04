@@ -1,5 +1,6 @@
-#include "tilelayer.h"
 #include "../batchrenderer2d.h"
+#include "tilelayer.h"
+
 
 namespace nezus { namespace graphics{
 	TileLayer::TileLayer(Shader* shader)

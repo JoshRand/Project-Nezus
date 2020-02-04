@@ -33,11 +33,13 @@ namespace nezus { namespace graphics {
 
 		m_Shader->enable();
 		m_Renderer->begin();
+		int i = 0;
 		for (const Renderable2D* renderable : m_Renderables)
-		{
-			m_Renderer->submit(renderable);
-		}
+			renderable->submit(m_Renderer);
+		
+		
 		m_Renderer->end();
+		//m_Renderer->pop();
 		m_Renderer->flush();
 		//if disabled shader - OpenGL error 1282  (invalid operator?)
 		//m_Shader->disable();

@@ -1,4 +1,8 @@
+#include "renderable2d.h"
 #include "simple2drenderer.h"
+
+
+
 
 namespace nezus { namespace graphics {
 	

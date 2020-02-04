@@ -17,7 +17,10 @@
 #include <Windows.h>
 #include <time.h>
 #include "src/graphics/layers/tilelayer.h"
+#include "src/graphics/layers/group.h"
 #define BATCH_RENDERER 1
+#define TEST_50K_SPRITES 0
+
 
 int main()
 {
@@ -45,7 +48,7 @@ int main()
 	TileLayer layer(&shader);
 
 	srand(time(NULL));
-
+#if TEST_50K_SPRITES
 	for (float y = -9.0f; y < 9.0f; y += .1)
 	{
 		for (float x = -16.0f; x < 16.0f; x += .1)
@@ -54,8 +57,22 @@ int main()
 			layer.add(new Sprite(x, y, 0.09f, 0.09f, math::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 		}
 	}
+#else
+	mat4 transform = mat4::rotation(45.0f, vec3(0, 0, 1));
 
-	layer.add(new Sprite(0, 0, 2, 2, math::vec4(0.8f, 0.2f, 0.8f, 1.0f)));
+	Group* group = new Group(mat4::translation(math::vec3(-15.0f,5.0f,0.0f)));
+	
+	group->add(new Sprite(0, 0, 6, 3, math::vec4(1, 1, 1, 1)));
+
+	Group* button = new Group(mat4::translation(math::vec3(0.5f, 0.5f, 0.0f)));
+	button->add(new Sprite(0.0f, 0.0f, 5.0f, 2.0, math::vec4(1, 0, 1, 1)));
+	button->add(new Sprite(0.5f, 0.5f, 3.0f, 1.0, math::vec4(0.2f, 0.3f, 0.8f, 1)));
+	group->add(button);
+
+	layer.add(group);
+	
+#endif
+	//layer.add(new Sprite(0, 0, 2, 2, math::vec4(0.8f, 0.2f, 0.8f, 1.0f)));
 
 	TileLayer layer2(&shader2);
 	layer2.add(new Sprite(-2, -2, 4, 4, math::vec4(1, 0, 1, 1)));
@@ -71,12 +88,12 @@ int main()
 		double x, y;
 		window.getMousePosition(x, y);
 		shader.enable();
-		shader.setUniform2f("light_pos", vec2(-8,-3));
-		shader2.enable();
 		shader2.setUniform2f("light_pos", vec2((float)(x * 32.0f /(float)window.getWidth() - 16.0f/*; 960.0f*/), (float)(9.0f - y * 18.0f / (float)window.getHeight() )));// 540.0f)));
+		//shader.setUniform2f("light_pos", vec2(-8,-3));
+		//shader2.enable();
 
 		layer.render();
-		layer2.render();
+		//layer2.render();
 		//fps display
 		window.update();
 		frames++;
