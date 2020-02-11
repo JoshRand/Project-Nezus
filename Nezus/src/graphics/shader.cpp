@@ -8,6 +8,7 @@ namespace nezus
 			: m_VertPath(vertPath), m_FragPath(fragPath)
 		{
 			m_ShaderID = load();
+		
 		}
 		Shader::~Shader()
 		{
@@ -77,21 +78,35 @@ namespace nezus
 		{
 			glUniform1f(getUniformLocation(name), value);
 		}
+
+		void Shader::setUniform1fv(const GLchar* name,  float* value , int count )
+		{
+			glUniform1fv(getUniformLocation(name), count, value);
+		}
+
 		void Shader::setUniform1i(const GLchar* name, int value)
 		{
 			glUniform1i(getUniformLocation(name), value);
 
+		} 
+
+		void Shader::setUniform1iv(const GLchar* name, int* value, int count)
+		{
+			glUniform1iv(getUniformLocation(name), count, value);
 		}
+
 		void Shader::setUniform2f(const GLchar* name, const math::vec2& vector)
 		{
 			glUniform2f(getUniformLocation(name), vector.x, vector.y);
 
 		}
+
 		void Shader::setUniform3f(const GLchar* name, const math::vec3& vector)
 		{
 			glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
 
 		}
+
 		void Shader::setUniform4f(const GLchar* name, const math::vec4& vector)
 		{
 			glUniform4f(getUniformLocation(name), vector.x, vector.y, vector.z, vector.w);

@@ -18,8 +18,11 @@ namespace nezus { namespace graphics {
 		void bind() const;
 		void unbind() const;
 		
-		inline unsigned int getWidth() { return m_Width; }
-		inline unsigned int getHeight() { return m_Height; }
+		inline const unsigned int getID() { return m_TID; }
+		inline const unsigned int getWidth() { return m_Width; }
+		inline const unsigned int getHeight() { return m_Height; }
+		
+		//inline GLuint& getID() { return m_TID; }
 	private:
 		GLuint load();
 

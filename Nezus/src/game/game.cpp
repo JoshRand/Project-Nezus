@@ -7,8 +7,8 @@ namespace nezus {
 			double x, y;
 			
 			m_Window.getMousePosition(x, y);
-			player1.Setx((x * 32.0f / (float)540 - 16.0f));
-			player1.Sety(9.0f - y * 18.0f / (float)960);
+			m_Player1.Setx((x * 32.0f / (float)540 - 16.0f));
+			m_Player1.Sety(9.0f - y * 18.0f / (float)960);
 
 		}
 
@@ -20,12 +20,13 @@ namespace nezus {
 			//draw walls
 			//draw spells
 			
-			player.add(new Sprite(player1.Getx(), player1.Gety(), 1.0f, 1.0f, math::vec4(0.4f, 0.5f, 1.0f, 1.0f)));
-			map.render();
-			
-			player.render();
-			
-			
+			//player.add(new Sprite(player1.Getx(), player1.Gety(), 1.0f, 1.0f, math::vec4(0.4f, 0.5f, 1.0f, 1.0f)));
+			if (m_Player1.PositionChange())
+			{
+				
+			}
+			m_Map.render();
+			m_PlayerLayer.render();
 		}
 	}
 }

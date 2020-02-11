@@ -15,20 +15,20 @@ namespace nezus {
 		class Game {
 
 			
-		public:
-			Entity player1 = Entity("castuh", math::vec2(0.0f, 0.0f));
+		private:
+			Entity m_Player1 = Entity("castuh", math::vec2(0.0f, 0.0f));
 			Shader& m_Shader;
-			TileLayer map = TileLayer(&m_Shader);
-			TileLayer player = TileLayer(&m_Shader);
+			TileLayer m_Map = TileLayer(&m_Shader);
+			TileLayer m_PlayerLayer = TileLayer(&m_Shader);
 			Window& m_Window;
-			Game(Shader& shader, Window& window)
-				:m_Shader(shader),m_Window(window)
+			Texture* m_Texture;
+		public:
+			Game(Shader* shader, Window* window, Texture* texture)
+				:m_Shader(*shader),m_Window(*window),m_Texture(texture)
 			{
 				
-				
-				
-				map.add(new Sprite(6.0f, 2.0f, 5.0f, 5.0f, math::vec4(0.4f, 0.5f, 1.0f, 1.0f)));
-				
+				m_Map.add(new Sprite(6.0f, 2.0f, 5.0f, 5.0f, math::vec4(0.4f, 0.5f, 1.0f, 1.0f)));
+				m_PlayerLayer.add(new Sprite(m_Player1.Getx(), m_Player1.Gety(), 1.0f, 1.0f, m_Texture));
 				//TileLayer players(&m_Shader);
 				//TileLayer walls(&m_Shader);
 				//TileLayer spells(&m_Shader);
