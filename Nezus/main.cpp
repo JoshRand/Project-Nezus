@@ -13,7 +13,7 @@
 
 #include "src/graphics/static_sprite.h"
 #include "src/graphics/sprite.h"
-
+//_CRT_NONSTDC_NO_DEPRECATE
 #include "src/graphics/layers/tilelayer.h"
 
 #include "src/graphics/layers/group.h"
@@ -25,7 +25,7 @@
 
 #define BATCH_RENDERER 1
 
-#define ENABLE_GAME 1
+#define ENABLE_GAME 0
 
 #if 1
 int main()
