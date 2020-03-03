@@ -18,6 +18,7 @@
 
 #include "src/graphics/layers/group.h"
 #include "src/graphics/texture.h"
+#include "src/graphics/label.h"
 
 #include "src/game/game.h"
 
@@ -35,7 +36,7 @@ int main()
 	using namespace math;
 	
 	Window window("Nezus!", 960, 540);
-	// glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	// glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 
 	mat4 ortho = mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
@@ -58,7 +59,7 @@ int main()
 	Game game(&shader, &window, textures[2]);
 #endif
 	
-
+#if 1
 	for (float y = -9.0f; y < 9.0f; y++)
 	{
 		for (float x = -16.0f; x < 16.0f; x++)
@@ -73,7 +74,15 @@ int main()
 			}
 		}
 	}
+#endif
+	Group* g = new Group(math::mat4::translation(math::vec3(-15.8f, 7.0f, 0.0f)));
 
+	Label* fps = new Label("", 0.4f,0.4f, math::vec4(1, 1, 1, 1));
+	g->add(new Sprite(0, 0, 4.3f, 1.5f, math::vec4(0.2f, 0.2f, 0.2f, 0.8f)));
+	g->add(fps);
+	layer.add(g);
+	Sprite* player = new Sprite(0, 0, 2, 2, math::vec4(1, 0, 1, 1));
+	layer.add(player);
 	GLint texIDs[] =
 	{
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9
@@ -86,7 +95,8 @@ int main()
 	Timer time;
 	float timer = 0;
 	unsigned int frames = 0;
-
+	int initposx = 0;
+	int initypos = 0;
 	while (!window.closed())
 	{
 		window.clear();
@@ -113,9 +123,19 @@ int main()
 		
 		frames++;
 		if (time.elapsed() - timer > 1.0f)
-		{
+		{	
+			player->setPosition(initposx++, initypos);
+			if (initposx > 15)
+			{
+				initypos++;
+				initposx = 0;
+			}
+				
+			//fps->position.x++;
 			timer += 1.0f;
+			fps->text = std::to_string(frames) + "fps";
 			printf("%d fps\n", frames);
+			
 			frames = 0;
 		}
 	}
