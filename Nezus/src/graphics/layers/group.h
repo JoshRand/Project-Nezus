@@ -7,9 +7,12 @@ namespace nezus {
 		private:
 			std::vector<Renderable2D*> m_Renderables;
 			math::mat4 m_TransformationMatrix;
-
+			
 		public: 
 			Group(const math::mat4& transform);
+			~Group();
+			std::vector<Renderable2D*> getRenderables() const;
+
 			void add(Renderable2D* renderable);
 			void submit(Renderer2D* renderer) const override;
 			

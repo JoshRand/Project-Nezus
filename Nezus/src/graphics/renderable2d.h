@@ -46,7 +46,7 @@ namespace nezus {
 			inline const math::vec2& getSize() const { return m_Size; }
 			inline const math::vec4& getColor() const { return m_Color; }
 			inline const std::vector<math::vec2>& getUV() const { return m_UV; }
-			 void setPosition(float x, float y) 
+			void setPosition(float x, float y)//float x, float y) 
 			{
 				m_Position.x = x;
 				m_Position.y = y;

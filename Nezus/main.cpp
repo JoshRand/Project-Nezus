@@ -22,11 +22,12 @@
 
 #include "src/game/game.h"
 
+
 #include <time.h>
 
 #define BATCH_RENDERER 1
 
-#define ENABLE_GAME 0
+#define ENABLE_GAME 1
 
 #if 1
 int main()
@@ -36,14 +37,18 @@ int main()
 	using namespace math;
 	
 	Window window("Nezus!", 960, 540);
-	// glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	//glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-	mat4 ortho = mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
+	mat4 ortho = mat4::orthographic(0.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f);
 
 	Shader* s = new Shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 	Shader& shader = *s;
+	Shader* sg = new Shader("src/shaders/basic.vert", "src/shaders/basic2.frag");
+	Shader& sgame = *sg;
+	sgame.enable();
+	sgame.setUniform2f("light_pos", vec2(7.0f, 1.5f));
 	shader.enable();
-	shader.setUniform2f("light_pos", vec2(4.0f, 1.5f));
+	shader.setUniform2f("light_pos", vec2(1.0f, 1.5f));
 	TileLayer layer(&shader);
 
 	srand(time(NULL));
@@ -56,10 +61,10 @@ int main()
 		new Texture("w.png")
 	};
 #if ENABLE_GAME
-	Game game(&shader, &window, textures[2]);
+	Game game(&shader,&sgame, &window, textures[2]);
 #endif
 	
-#if 1
+#if 1  
 	for (float y = -9.0f; y < 9.0f; y++)
 	{
 		for (float x = -16.0f; x < 16.0f; x++)
@@ -73,6 +78,7 @@ int main()
 			layer.add(new Sprite(x, y, 0.9f, 0.9f, textures[rand() % 3]));
 			}
 		}
+		
 	}
 #endif
 	Group* g = new Group(math::mat4::translation(math::vec3(-15.8f, 7.0f, 0.0f)));
@@ -90,7 +96,12 @@ int main()
 
 	shader.enable();
 	shader.setUniform1iv("textures", texIDs, 10);
+
+	sgame.enable();
+	sgame.setUniform1iv("textures", texIDs, 10);
+
 	shader.setUniformMat4("pr_matrix", math::mat4::orthographic(-16.0f,16.0f,-9.0f,9.0f,-1.0f,1.0f));
+	sgame.setUniformMat4("pr_matrix", math::mat4::orthographic(-16.0f,16.0f,-9.0f,9.0f,-1.0f,1.0f));
 
 	Timer time;
 	float timer = 0;
@@ -98,15 +109,17 @@ int main()
 	int initposx = 0;
 	int initypos = 0;
 	while (!window.closed())
-	{
+	{ 
+
 		window.clear();
 		shader.enable();
+		
 		double x, y;
 		window.getMousePosition(x, y);
-		
+#if !ENABLE_GAME
 		shader.setUniform2f("light_pos", vec2((float)(x * 32.0f / (float)window.getWidth() - 16.0f), (float)(9.0f - y * 18.0f / (float)window.getHeight())));// 540.0f)));
-
-		
+#endif	
+		sgame.enable();
 		layer.render();
 		#if ENABLE_GAME
 		game.update();
@@ -115,15 +128,12 @@ int main()
 
 		window.update();
 
-
-
-
-		
 		//fps display
 		
 		frames++;
 		if (time.elapsed() - timer > 1.0f)
 		{	
+			std::cout << window.getWidth() << "= Width; " << window.getHeight() << " = Height." << std::endl;
 			player->setPosition(initposx++, initypos);
 			if (initposx > 15)
 			{

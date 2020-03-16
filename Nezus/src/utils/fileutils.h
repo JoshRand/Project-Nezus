@@ -2,9 +2,6 @@
 #include <string>
 
 namespace nezus {
-	class FileUtils
-	{
-	public:
 
 	static std::string read_file(const char* filepath)
 	{
@@ -21,5 +18,5 @@ namespace nezus {
 		delete[] data;
 		return result;
 	}
-	};
+	
 }
