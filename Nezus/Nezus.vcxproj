@@ -208,6 +208,7 @@
     <ClCompile Include="ext\freetype\src\type1\type1.c" />
     <ClCompile Include="ext\freetype\src\type42\type42.c" />
     <ClCompile Include="ext\freetype\src\winfonts\winfnt.c" />
+    <ClCompile Include="src\game\level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\game\entity.cpp" />
     <ClCompile Include="src\game\game.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="ext\freetype\include\freetype\config\ftmodule.h" />
     <ClInclude Include="ext\freetype\include\freetype\config\ftstdlib.h" />
     <ClInclude Include="ext\freetype\include\ft2build.h" />
+    <ClInclude Include="src\game\level.h" />
     <ClInclude Include="src\game\entity.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\player.h" />

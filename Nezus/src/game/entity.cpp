@@ -1,14 +1,14 @@
 #include "entity.h"
 namespace nezus
 {
-	Entity::Entity(std::string name, math::vec3 position)
-		:m_Name(name), m_Position(position)
+	Entity::Entity(std::string name, int posx, int posy)
+		:m_Name(name), m_PositionX(posx), m_PositionY(posy)
 	{
 
 	}
-	Entity::Entity() 
+	Entity::Entity()
 	{
-		m_Position = math::vec3(0.0f, 0.0f,0.0f);
+
 	}
 
 	float Entity::getSpeed()
@@ -16,14 +16,14 @@ namespace nezus
 		return m_Speed;
 	}
 
-	float& Entity::getX()
+	int& Entity::getX()
 	{
 		
-		return  m_Position.x;
+		return  m_PositionX;
 	}
-	float& Entity::getY()
+	int& Entity::getY()
 	{
-		return  m_Position.y;
+		return  m_PositionY;
 	}
 
 	std::string& Entity::GetName()
@@ -31,27 +31,37 @@ namespace nezus
 		return  m_Name;
 	}
 
-	void Entity::setX(double x)
+	void Entity::setX(int x)
 	{
-		m_PosPrevX = m_Position.x;
-		m_Position.x = x;
-		if ((int)m_PosPrevX != (int)m_Position.x)
+		m_PosPrevX = m_PositionX;
+		m_PositionX = x;
+		if ((int)m_PosPrevX != (int)m_PositionX)
 		{
 			m_PositionChange = true;
 		}
 		
 	}
-	void Entity::setY(double y)
+	void Entity::setY(int y)
 	{
-		m_PosPrevY = m_Position.y;
-		m_Position.y = y;
-		if ((int)m_PosPrevY != (int)m_Position.y)
+		m_PosPrevY = m_PositionY;
+		m_PositionY = y;
+		if ((int)m_PosPrevY != (int)m_PositionY)
 		{
 			m_PositionChange = true;
 		}
 	}
 
-	void Entity::moveGroup(graphics::Group* m_group, float dx, float dy)
+	bool Entity::isOccupied()
+	{
+		return m_Occupied;
+	}
+
+	void Entity::setOccupied()
+	{
+		m_Occupied = true;
+	}
+
+	void Entity::moveGroup(graphics::Group* m_group, int dx, int dy)
 	{
 		std::vector < graphics::Renderable2D* > groupmembers = m_group->getRenderables();
 		groupmembers[0]->setPosition(dx, dy);

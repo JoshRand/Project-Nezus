@@ -6,7 +6,8 @@ namespace nezus {
 		void Game::update()
 		{
 			m_Player1->Update();
-			
+			m_Level->placeEntitiesOnLevel();
+			m_Level->updateEntities(&m_Entities);
 		}
 
 		void Game::draw()

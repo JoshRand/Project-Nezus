@@ -2,7 +2,7 @@
 #include <time.h>
 #include "..\utils\timer.h"
 #include "entity.h"
-
+#include "level.h"
 
 namespace nezus { namespace graphics {
 	class Player : public Entity
@@ -11,6 +11,7 @@ namespace nezus { namespace graphics {
 		Window& m_Window;
 		Shader& m_Shader;
 		Shader& m_Shader2;
+		Level* m_Level;
 		Sprite* m_PlayerSprite;
 		Group* m_PlayerGroup;
 		Label* m_PlayerLabel; 
@@ -19,8 +20,10 @@ namespace nezus { namespace graphics {
 		TileLayer m_PlayerTLayer = TileLayer(&m_Shader2);
 		float tf = 0;
 	public:
-		Player(std::string name, math::vec3 position, Window* window, Shader* shader, Shader* shader2);//, Timer &time);
+		Player(std::string name, int posx, int posy, Window* window, Shader* shader, Shader* shader2);//, Level** level );
 		//buffs/spells ect
+		Group* getGroup();
+		void getLevel(Level* level);
 		void Update();
 		void render();
 
