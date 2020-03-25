@@ -27,20 +27,26 @@ public:
 	void setX(int x);
 	void setY(int y);
 	float getSpeed();
-	bool PositionChange();
+	
+	void setPositionChanged(bool ischanged);
+	void PositionChange();
+	bool checkPositionChange();
 	std::string m_Name;
+	float m_APositionX = 0.0f;
+	float m_APositionY = 0.0f;
+	
 	int m_PositionX = 0;
 	int m_PositionY = 0;
 	bool isOccupied();
 	void setOccupied();
 	//math::vec3 m_Position;
-	void moveGroup(graphics::Group* m_group, int dx, int dy);
+	void moveGroup(graphics::Group* m_group, float dx, float dy);
+	float m_PosPrevX = 0;
+	float m_PosPrevY = 0;
 private:
 	bool m_Occupied = false;
 	float m_Speed = 0.1f;
 	std::tuple<int, const char*> skills = std::make_tuple(99, "hi");
-	float m_PosPrevX = 0;
-	float m_PosPrevY = 0;
 	//std::tuple<int, int> tuples();
 	bool m_PositionChange = false;
 	

@@ -19,6 +19,7 @@ namespace nezus { namespace graphics {
 		Layer(Renderer2D* renderer, Shader* shader, math::mat4 projectionMatrix);	
 	public:
 		virtual ~Layer();
+		virtual std::vector<Renderable2D*> getRenderables() const;
 		virtual void add(Renderable2D* renderable);
 		virtual void render();
 	};

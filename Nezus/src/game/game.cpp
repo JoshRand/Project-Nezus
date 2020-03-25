@@ -8,6 +8,7 @@ namespace nezus {
 			m_Player1->Update();
 			m_Level->placeEntitiesOnLevel();
 			m_Level->updateEntities(&m_Entities);
+			
 		}
 
 		void Game::draw()
@@ -26,6 +27,20 @@ namespace nezus {
 			//m_Player1TLayer.render();
 		}
 
-		
+		void Game::moveMap(TileLayer* m_TileLayer, int dx, int dy)
+		{
+			int j = 0;
+			std::vector < graphics::Renderable2D* > groupmembers = m_TileLayer->getRenderables();
+			for (int i = 0; i < groupmembers.size(); i++)
+			{
+				
+					groupmembers[i]->setPosition(dx + groupmembers[i]->getPosition().x, dy + groupmembers[i]->getPosition().y);
+
+				
+			}
+		}
+
+
+
 	}
 }

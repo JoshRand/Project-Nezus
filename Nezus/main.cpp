@@ -64,7 +64,7 @@ int main()
 	Game game(&shader,&sgame, &window, textures[2]);
 #endif
 	
-#if 1  
+#if 0  
 	for (float y = -9.0f; y < 9.0f; y++)
 	{
 		for (float x = -16.0f; x < 16.0f; x++)

@@ -38,7 +38,11 @@ namespace nezus {
 
 		bool Level::peekRight(int curx, int cury)
 		{
-			if (!m_EntityArray[curx + 1][cury][0].isOccupied())
+			if (curx + 1 > m_GridDimX -1)
+			{
+				return true;
+			}
+			else if (!m_EntityArray[curx + 1][cury][0].isOccupied())
 			{
 				m_EntityArray[curx][cury][0] = Entity();
 				return m_EntityArray[curx + 1][cury][0].isOccupied();
@@ -48,20 +52,51 @@ namespace nezus {
 
 		}
 
-	//	bool Level::peekLeft(int curx, int cury)
-	//	{
-	//
-	//	}
-	//	
-	//	bool Level::peekUp(int curx, int cury)
-	//	{
-	//
-	//	}
-	//
-	//	bool Level::peekDown(int curx, int cury)
-	//	{
-	//
-	//	}
+		bool Level::peekLeft(int curx, int cury)
+		{
+			if (curx - 1 < 0)
+			{
+				return true;
+			} 
+			else if (!m_EntityArray[curx - 1][cury][0].isOccupied())
+			{
+				m_EntityArray[curx][cury][0] = Entity();
+				return m_EntityArray[curx - 1][cury][0].isOccupied();
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
+			}
+
+		}
+		
+		bool Level::peekUp(int curx, int cury)
+		{
+			if (cury + 1 > m_GridDimY -1)
+			{
+				return true;
+			}
+			else if (!m_EntityArray[curx][cury + 1][0].isOccupied())
+			{
+				m_EntityArray[curx][cury][0] = Entity();
+				return m_EntityArray[curx][cury + 1][0].isOccupied();
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
+			}
+		}
+	
+	 	bool Level::peekDown(int curx, int cury)
+	 	{
+			if (cury - 1 < 0)
+			{
+				return true;
+			}
+			else if (!m_EntityArray[curx - 1][cury][0].isOccupied())
+			{
+				m_EntityArray[curx][cury][0] = Entity();
+				return m_EntityArray[curx - 1][cury][0].isOccupied();
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
+				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
+			}
+	 	}
 		
 		//void Level::DrawLevel()
 		//{

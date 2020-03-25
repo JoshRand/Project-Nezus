@@ -23,6 +23,11 @@ namespace nezus { namespace graphics {
 
 	}
 
+	std::vector<Renderable2D*> Layer::getRenderables() const
+	{
+		return  m_Renderables;
+	}
+
 	void Layer::add(Renderable2D* renderable)
 	{
 		m_Renderables.push_back(renderable);
