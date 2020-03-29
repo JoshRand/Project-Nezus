@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include "entity.h"
 #include "player.h"
+#include "spellsdatabase.h"
 #include "..\math\math.h"
 #include "..\graphics\layers\tilelayer.h"
 #include "..\graphics\sprite.h"
@@ -27,8 +28,9 @@ namespace nezus {
 			TileLayer m_Map = TileLayer(&m_Shader);
 			Texture* m_Texture;
 			Player* m_Player1;
+			SpellsDatabase* m_SpellsDatabase = new SpellsDatabase();
 			float tf = 0;
-			int m_MapWidth = 5;
+			int m_MapWidth = 50;
 			int m_MapHeight = m_MapWidth; //2
 		public:
 			Game(Shader* shader,Shader* shader2, Window* window, Texture* texture)
@@ -44,8 +46,9 @@ namespace nezus {
 						
 					}
 				}
+				Spell newSpell1 = m_SpellsDatabase->getSpell(0);
 				m_Map.add(m_MapGroup);
-				m_Player1 = new Player("Mastuh", 8.0f, 4.0f, &m_Window, &m_Shader, &m_Shader2);
+				m_Player1 = new Player("Mastuh", 8.0f, 4.0f, &m_Window, &m_Shader, &m_Shader2, m_SpellsDatabase);
 
 				m_Entities.push_back(m_Player1);
 				m_Level = new Level(&m_Entities);

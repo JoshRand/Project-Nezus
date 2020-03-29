@@ -1,19 +1,21 @@
 #include "player.h"
 
+
 namespace nezus{ namespace graphics{
 
-	Player::Player(std::string name, int posx, int posy, Window* window, Shader* shader, Shader* pshader)//, Level** level)
-		:m_Window(*window), m_Shader(*shader), m_Shader2(*pshader)//,m_Level(*level)
+	Player::Player(std::string name, int posx, int posy, Window* window, Shader* shader, Shader* pshader, SpellsDatabase* spelldata)//, Level** level)
+		:m_Window(*window), m_Shader(*shader), m_Shader2(*pshader), m_Spelldatabase(*spelldata)//,m_Level(*level)
 	{
 		
 		m_Name = name;
-		
+		m_PlayerHp = m_PlayerHpMax;
 		m_PositionX = posx;
 		m_PositionY = posy;
 		m_PlayerGroup = new Group(math::mat4::translation(math::vec3(1.0f,0.0f,0.0f)));//math::vec3((float)m_PositionX, (float)m_PositionY, 0.0f)));
-		m_PlayerSprite = new Sprite(0.0f, 0.0f, 2.0f, 2.0f, m_PlayerTexture);
-		m_PlayerHealthBarGreen = new Sprite(-0.5f, 3.0f, 1.0f, 0.4f, math::vec4(0.0f, 1.0f, 0.2f, 1.0f));
-		m_PlayerHealthBarRed = new Sprite(-0.5f, 3.0f, 3.0f, 0.4f, math::vec4(1.0f, 0.0f, 0.2f, 1.0f));
+		m_PlayerSprite = new Sprite(0.0f, 0.0f, 2.0f, 2.0f, m_PlayerTextureDown);
+		m_PlayerHealthBarGreen = new Sprite(-0.5f, 3.0f, 1.0f, 0.4f, math::vec4(0.0f, 1.0f, 0.2f, 0.5f));
+		m_PlayerHealthBarRed = new Sprite(-0.5f, 3.0f, 3.0f, 0.4f, math::vec4(1.0f, 0.0f, 0.2f, 0.5f));
+		m_PlayerHealthBarGreen->setSize(3 * (m_PlayerHp / m_PlayerHpMax ), 0.4f);
 		m_PlayerLabel = new Label(m_Name, - 0.5f ,  2.2f, math::vec4(1, 1, 1, 1));
 		m_PlayerGroup->add(m_PlayerSprite);
 		m_PlayerGroup->add(m_PlayerLabel);
@@ -25,6 +27,7 @@ namespace nezus{ namespace graphics{
 		m_Shader.setUniform2f("light_pos", math::vec2(m_PositionX * 2 + 2.0f, m_PositionY * 2 + 1.3f));
 		m_APositionX = (float)m_PositionX;
 		m_APositionY = (float)m_PositionY;
+		newspell1 = m_Spelldatabase.getSpell(0);
 	}
 
 	void Player::getLevel(Level* level)
@@ -45,6 +48,7 @@ namespace nezus{ namespace graphics{
 
 	void Player::Update()
 	{
+		std::vector < graphics::Renderable2D* > groupmembers = m_PlayerGroup->getRenderables();
 		double x, y;
 		m_Window.getMousePosition(x, y);
 		float deltax = 0.0f;
@@ -53,13 +57,18 @@ namespace nezus{ namespace graphics{
 		int keystateleft = glfwGetKey(m_Window.getGLFWwindow(), GLFW_KEY_LEFT);
 		int keystateup = glfwGetKey(m_Window.getGLFWwindow(), GLFW_KEY_UP);
 		int keystatedown = glfwGetKey(m_Window.getGLFWwindow(), GLFW_KEY_DOWN);
+		int keystate1 = glfwGetKey(m_Window.getGLFWwindow(), GLFW_KEY_1);
 		if (!m_Walking)
 		{
 			if (keystateright == GLFW_PRESS)
 			{
 				m_PlayerState = FacingRight;
+				//m_PlayerTexture = new Texture("bright.png");
+				m_PlayerSprite->setTexture(m_PlayerRightTexture);
+				
 				//change facing position
-				if (m_WalkTimer.elapsed() > 0.5f)
+				
+				if (m_WalkTimer.elapsed() > 0.3f)
 				{
 					if (!m_Level->peekRight(m_PositionX, m_PositionY))
 					{
@@ -74,7 +83,8 @@ namespace nezus{ namespace graphics{
 			{	
 				m_PlayerState = FacingLeft;
 				//change facing position
-				if (m_WalkTimer.elapsed()  > 0.5f)
+				m_PlayerSprite->setTexture(m_PlayerLeftTexture);
+				if (m_WalkTimer.elapsed()  > 0.3f)
 				{	
 					if (!m_Level->peekLeft(m_PositionX, m_PositionY))
 					{
@@ -92,7 +102,8 @@ namespace nezus{ namespace graphics{
 			{
 				m_PlayerState = FacingUp;
 				//change facing position
-				if (m_WalkTimer.elapsed() > 0.5f)
+				m_PlayerSprite->setTexture(m_PlayerUpTexture);
+				if (m_WalkTimer.elapsed() > 0.3f)
 				{
 					if (!m_Level->peekUp(m_PositionX, m_PositionY))
 					{
@@ -108,7 +119,8 @@ namespace nezus{ namespace graphics{
 			{
 				m_PlayerState = FacingDown;
 				//change facing position
-				if (m_WalkTimer.elapsed() > 0.5f)
+				m_PlayerSprite->setTexture(m_PlayerTextureDown);
+				if (m_WalkTimer.elapsed() > 0.3f)
 				{
 					if (!m_Level->peekDown(m_PositionX, m_PositionY))
 					{
@@ -162,9 +174,39 @@ namespace nezus{ namespace graphics{
 			m_APositionY = m_PositionY;
 			m_Walking = false;
 			m_MoveCounter = 0;
+			std::cout << "X = " << m_PositionX << " Y = " << m_PositionY << std::endl;
 		}
+		if (m_Time.elapsed() > 0.005)
+		{
+
+			m_PlayerHealthBarGreen->setSize(3 * ( (float)m_PlayerHp / (float)m_PlayerHpMax), 0.4f);
+			m_Time.reset();
+		}
+		
+		if (m_SpellTimer.elapsed() > 0.1f)
+		{
+			if (keystate1)
+			{
+				
+				m_PlayerHp += newspell1.m_Properties["m_HpGiven"];
+				std::cout << "HP given from soothe =" <<newspell1.m_Properties["m_HpGiven"] << std::endl;
+				if (m_PlayerHp > m_PlayerHpMax)
+				{
+					m_PlayerHp = m_PlayerHpMax;
+				}
+			}
+			m_SpellTimer.reset();
+		}
+
+		if (m_PoisonTimer.elapsed() > 1.0f)
+		{
+			if (m_PlayerHp != 0)
+			{
+				m_PlayerHp--;
+			}
 			
-		std::cout << "X = " << m_PositionX << " Y = " << m_PositionY << std::endl;
+			m_PoisonTimer.reset();
+		}
 	}
 
 	void Player::movePlayer(float px, float py)

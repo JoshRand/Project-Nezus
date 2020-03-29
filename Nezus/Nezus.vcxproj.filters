@@ -285,6 +285,12 @@
     <ClCompile Include="src\game\level.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\spellsdatabase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\spell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <!--
     <ClCompile Include="ext\freetype\src\cff\cff.c">
        <Filter>Source Files\ext\freetype</Filter>
@@ -533,6 +539,12 @@
     </ClInclude>
     <ClInclude Include="src\game\level.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\spellsdatabase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\spell.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -213,6 +213,8 @@
     <ClCompile Include="src\game\entity.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\player.cpp" />
+    <ClCompile Include="src\game\spell.cpp" />
+    <ClCompile Include="src\game\spellsdatabase.cpp" />
     <ClCompile Include="src\graphics\batchrenderer2d.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\indexbuffer.cpp" />
@@ -249,6 +251,8 @@
     <ClInclude Include="src\game\entity.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\player.h" />
+    <ClInclude Include="src\game\spell.h" />
+    <ClInclude Include="src\game\spellsdatabase.h" />
     <ClInclude Include="src\graphics\batchrenderer2d.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\indexbuffer.h" />

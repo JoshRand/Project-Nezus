@@ -5,9 +5,11 @@ namespace nezus {
 
 		void Game::update()
 		{
-			m_Player1->Update();
-			m_Level->placeEntitiesOnLevel();
-			m_Level->updateEntities(&m_Entities);
+			
+				m_Player1->Update();
+				m_Level->placeEntitiesOnLevel();
+				m_Level->updateEntities(&m_Entities);
+				
 			
 		}
 
@@ -22,8 +24,9 @@ namespace nezus {
 
 			//player.add(new Sprite(player1.getX(), player1.getY(), 1.0f, 1.0f, math::vec4(0.4f, 0.5f, 1.0f, 1.0f)));
 			
-			m_Map.render();
-			m_Player1->render();
+				m_Map.render();
+				m_Player1->render();
+			
 			//m_Player1TLayer.render();
 		}
 

@@ -14,6 +14,14 @@ namespace nezus {
 		{
 			m_Texture = texture;
 		}
-
+		void Sprite::setTexture(Texture* texture)
+		{
+			m_Texture = texture;
+		}
+		void Sprite::setSize(float width, float height)
+		{
+			m_Size = math::vec2(width, height);
+		}
+	
 	}
 }

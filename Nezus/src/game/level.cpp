@@ -46,8 +46,6 @@ namespace nezus {
 			{
 				m_EntityArray[curx][cury][0] = Entity();
 				return m_EntityArray[curx + 1][cury][0].isOccupied();
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
 			}
 
 		}
@@ -62,8 +60,6 @@ namespace nezus {
 			{
 				m_EntityArray[curx][cury][0] = Entity();
 				return m_EntityArray[curx - 1][cury][0].isOccupied();
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
 			}
 
 		}
@@ -78,8 +74,7 @@ namespace nezus {
 			{
 				m_EntityArray[curx][cury][0] = Entity();
 				return m_EntityArray[curx][cury + 1][0].isOccupied();
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
+				
 			}
 		}
 	
@@ -93,19 +88,10 @@ namespace nezus {
 			{
 				m_EntityArray[curx][cury][0] = Entity();
 				return m_EntityArray[curx - 1][cury][0].isOccupied();
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0] = *m_Entities[i];
-				//m_EntityArray[m_Entities[curx]->getX()][m_Entities[cury]->getY()][0].setOccupied();
+				
 			}
 	 	}
 		
-		//void Level::DrawLevel()
-		//{
-		//	for (int i = 0; i < m_Entities.size(); i++)
-		//	{
-		//		m_Entities[i]->moveGroup(m_Entities[i].get, m_Entities[i]->getX(), m_Entities[i]->getY());
-		//	}
-		//
-		//}
 
 	}
 }
